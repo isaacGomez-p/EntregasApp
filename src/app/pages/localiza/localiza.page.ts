@@ -79,7 +79,7 @@ export class LocalizaPage implements OnInit {
       this.wayPoint = [];
       this.pedidos = JSON.parse(window.localStorage.getItem("pedidos"));
       this.pedidos.map(item => {
-        if(item.Estado === 2){
+        if(item.estado === 2){
           if (item.Lat !== null) {
             if(item.Lng !== null){
               let datos = {

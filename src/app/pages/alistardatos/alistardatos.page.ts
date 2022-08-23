@@ -14,7 +14,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class AlistardatosPage implements OnInit {
 
-  pedidos: any = [];
+  pedidos: IData[] = [];
   conductor: any = [];
   totalRegistros: number;
 
@@ -24,16 +24,22 @@ export class AlistardatosPage implements OnInit {
   }
 
   cargar_JSON_LocalStorage(){
-    this.pedidos = this._logic.getDataLocalStorage()
+    this._logic.getDataLocalStorage().subscribe(data => {
+      this.pedidos = data;
+    })
   }
 
   cargar_JSON(){
+    console.log("ENTRA A CARGAR JSON");    
     try{      
-      this.pedidos = this._logic.getData()      
-      console.log("asdasd"+ window.localStorage.getItem("cedula"));
-      this.cargarDatos(+window.localStorage.getItem("cedula"));          
-      this.grabar_JSON_enLocalStorage();
-      this.toastConfirmacion('Sincronización exitosa', 'success');
+      this._logic.getData().subscribe(data => {
+        this.pedidos = JSON.parse(JSON.stringify(data.result));
+        console.log("asdasd"+ window.localStorage.getItem("cedula"));
+        this.cargarDatos(+window.localStorage.getItem("cedula"));          
+        this.grabar_JSON_enLocalStorage();
+        this.toastConfirmacion('Sincronización exitosa', 'success');
+      })
+      
     }catch(Exception){
       this.toastConfirmacion('Ha ocurrido un error en el servidor.', 'error');
     }
@@ -41,14 +47,15 @@ export class AlistardatosPage implements OnInit {
 
   private cargarDatos(cedula: number){          
     this.conductor = [];    
-    if(this.pedidos !== null){         
-      console.log(" -- - - - - -- IF");
-      this.pedidos.subscribe((res) => {
-        for(let i=0; i < res.length; i ++){
-          if(res[i].Asignado === cedula){
-            this.conductor.push(res[i]);              
-          }
-        }
+    if(this.pedidos !== null){
+      this.pedidos.map((res) => {
+        console.log(" -- - - - - -- IF" + JSON.stringify(res));
+        console.log(res.asignado);
+        console.log(cedula);
+        console.log("-------------");
+        if(res.asignado === cedula){
+          this.conductor.push(res);              
+        }        
         this.limpiar_JSON_enLocalStorage();
         this.grabar_JSON_enLocalStorage();
       })       

@@ -5,6 +5,8 @@ import { AppComponent } from '../app.component';
 import { MenuController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { ProveedorDatosService } from '../services/proveedor-datos.service';
+import { UserEntity } from 'src/interfaces/userEntity';
+import { IData } from '../../interfaces/data.interfacepedidos';
 
 @Component({
   selector: 'app-login-form',
@@ -15,6 +17,8 @@ import { ProveedorDatosService } from '../services/proveedor-datos.service';
 export class LoginFormPage implements OnInit {
 
   private af: Boolean;
+
+  user : UserEntity;
 
   lista: any = [];
 
@@ -32,18 +36,20 @@ export class LoginFormPage implements OnInit {
 
   nombreUsuario: string;
 
+  validar : IData[] = [];
+
   constructor(private authService: AuthService, private router: Router, private appComponent : AppComponent, menuCtrl: MenuController, public toastController: ToastController, private proveedorDatos: ProveedorDatosService) {
     menuCtrl.enable(false, 'primerMenu');
   }
 
 
   ngOnInit() {    
-    this.lista = this.proveedorDatos.getConductores();
+    /*this.lista = this.proveedorDatos.getConductores();
     this.lista.subscribe(res =>{
       res.map(e =>{
         this.listaConductores.push(e);
       })        
-    })
+    })*/
   }
 
   OnViewDidEnter() {    
@@ -63,11 +69,12 @@ export class LoginFormPage implements OnInit {
       
        this.proveedorDatos.getLogin(form.value.password, form.value.user).subscribe((data)=>{
         
-        if(data.length > 0)  {         
+        if(data.status === 200)  {         
           //this.limpiar_JSON_enLocalStorage(form.value.user);
-          window.localStorage.setItem("cedula", form.value.user);
+          this.user = JSON.parse(JSON.stringify(data.result));
+          window.localStorage.setItem("cedula", this.user.identification);
           window.localStorage.setItem( "session", 'true');
-          window.localStorage.setItem( "usuario", data[0].Nombre_Conductor); 
+          window.localStorage.setItem( "usuario", this.user.name); 
           //this.nombreUsuario = data[0].Nombre_Conductor; 
           //this.nombreUsuario = "Bienvenido";
           this.appComponent.usuario = this.nombreUsuario;
@@ -103,19 +110,15 @@ export class LoginFormPage implements OnInit {
   }
 
   private limpiar_JSON_enLocalStorage(numero: number){  
-    let validar = [];
+    
     console.log('entro a limpiar')
-    validar = JSON.parse(window.localStorage.getItem( "pedidos"));
+    this.validar = JSON.parse(window.localStorage.getItem( "pedidos"));
     if(numero!==0){
       console.log('si')
-      if(validar !== null){
-        if(validar.length > 0){
-          console.log('si tiene datos')
-          console.log('dato ' + validar[0].Asignado)
-          console.log('numero ' + numero)
-          console.log('resultado ' + (parseInt(validar[0].Asignado) === numero));
+      if(this.validar !== null){
+        if(this.validar.length > 0){
           
-          if(validar[0].Asignado.toString.equals(numero.toString)){          
+          if(this.validar[0].asignado.toString() === numero.toString()){          
             console.log('es diferente')
             window.localStorage.clear();
           }

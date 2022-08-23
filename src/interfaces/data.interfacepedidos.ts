@@ -1,27 +1,27 @@
 export interface IData {
-    Campania?: number
-    Despacho?: number
-    Manifiesto?: number
-    Pedido?: string
-    Id?: string
-    DestinoFinal?: string
-    Depto?: string
-    Ciudad?: string
-    Direccion?: string
-    Tel?: string
-    Asignado?: number
-    Conductor?: string
-    Cond_Celular?: number
+    campania?: number
+    despacho?: number
+    manifiesto?: number
+    pedido?: string
+    id?: string
+    destinoFinal?: string
+    depto?: string
+    ciudad?: string
+    direccion?: string
+    tel?: string
+    asignado?: number
+    conductor?: string
+    cond_celular?: number
     Vehi_Placa?: string
-    Vehi_Tipo?: string
+    vehi_Tipo?: string
     Vehi_Color?: string
     Relacion_Id?: number
     Relacion_Fec?: string
     PreRuta?: number
-    Estado?: number
-    Causal_Id?: number
-    Entrega_Fec?: string
-    Foto?: string
+    estado?: number
+    causal_Id?: number
+    entrega_Fec?: string
+    foto?: string
     Lat?: number
     Lng?: number
     Prec?: number

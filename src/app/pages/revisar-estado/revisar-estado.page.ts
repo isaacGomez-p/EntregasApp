@@ -43,13 +43,13 @@ export class RevisarEstado {
       this.restantes = 0;
       this.noEntregados = 0;
       for (let numero of this.pedidos$) {
-        if (numero.Estado === 5) {
+        if (numero.estado === 5) {
           this.entregados++;
         }
-        if (numero.Estado === 2) {
+        if (numero.estado === 2) {
           this.restantes++;
         }
-        if (numero.Estado === 7) {
+        if (numero.estado === 7) {
           this.noEntregados++;
         }
       }
@@ -146,7 +146,7 @@ export class RevisarEstado {
     let date = new Date();
     this.pedidos$.map(item => {
       if (item.Pedido === pedido.Pedido) {              
-        item.Estado = 2;
+        item.estado = 2;
         item.Causal_Id = 0;
         item.Entrega_Fec = '1900-01-01T00:00:00'; //null?
         item.Vehi_Tipo =  '';

@@ -44,9 +44,9 @@ export class ObtenerdatosPage {
           this.pedidosBD.subscribe(itemBD => {
             itemBD.map(mapItem => {
               console.log('Pedido: ' + mapItem.Pedido)
-              if(item.Pedido === mapItem.Pedido && item.Estado !== mapItem.Estado){
-                console.log('Entro ' + item.Pedido + ' estado ' + item.Estado)   
-                this.response = this._logic.putData(item.Pedido, item);                
+              if(item.Pedido === mapItem.Pedido && item.estado !== mapItem.estado){
+                console.log('Entro ' + item.Pedido + ' estado ' + item.estado)   
+                //this.response = this._logic.modificar(item.Pedido, item);                
                 return;
               }
             });          

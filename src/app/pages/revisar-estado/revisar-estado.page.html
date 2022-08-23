@@ -51,82 +51,82 @@
     </ion-list>
     
     <ion-row *ngFor="let pedido of pedidos$ ">
-      <ion-col *ngIf="seleccion === 's' && pedido.Estado === 5" size="1.4" style="font-size: 0.5rem;border: 1px solid;border-color: rgb(126, 123, 123);">
-        <div font align="rigth">{{ pedido.Pedido }}</div>
+      <ion-col *ngIf="seleccion === 's' && pedido.estado === 5" size="1.4" style="font-size: 0.5rem;border: 1px solid;border-color: rgb(126, 123, 123);">
+        <div font align="rigth">{{ pedido.pedido }}</div>
       </ion-col>
 
-      <ion-col *ngIf="seleccion === 's' && pedido.Estado === 5" size="8.3" style="font-size: 0.8rem;border: 1px solid;border-color: rgb(126, 123, 123);">
+      <ion-col *ngIf="seleccion === 's' && pedido.estado === 5" size="8.3" style="font-size: 0.8rem;border: 1px solid;border-color: rgb(126, 123, 123);">
         <ion-row class="item-2.0px" style="font-size: 0.7rem" class="item-10px">
-          <strong>{{ pedido.DestinoFinal }}</strong>
+          <strong>{{ pedido.destinoFinal }}</strong>
         </ion-row>
 
-        <ion-row *ngIf="seleccion === 's' && pedido.Estado === 5" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
-          <strong>Direccion: {{ pedido.Direccion }}</strong>
+        <ion-row *ngIf="seleccion === 's' && pedido.estado === 5" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
+          <strong>Direccion: {{ pedido.direccion }}</strong>
         </ion-row>
 
-        <ion-row *ngIf="seleccion === 's' && pedido.Estado === 5" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
-          <strong>Tel: {{ pedido.Tel }}</strong>
+        <ion-row *ngIf="seleccion === 's' && pedido.estado === 5" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
+          <strong>Tel: {{ pedido.tel }}</strong>
         </ion-row>
 
-        <ion-row *ngIf="seleccion === 's' && pedido.Estado === 5" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
-          <strong>Depto: {{ pedido.Depto }}</strong>
+        <ion-row *ngIf="seleccion === 's' && pedido.estado === 5" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
+          <strong>Depto: {{ pedido.depto }}</strong>
         </ion-row>
 
-        <ion-row *ngIf="seleccion === 's' && pedido.Estado === 5" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
-          <strong>Ciudad: {{ pedido.Ciudad }}</strong>
+        <ion-row *ngIf="seleccion === 's' && pedido.estado === 5" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
+          <strong>Ciudad: {{ pedido.ciudad }}</strong>
         </ion-row>
 
-        <ion-row *ngIf="seleccion === 's' && pedido.Estado === 5" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
-          <strong>Fecha: {{ pedido.Vehi_Tipo }}</strong>
+        <ion-row *ngIf="seleccion === 's' && pedido.estado === 5" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
+          <strong>Fecha: {{ pedido.vehi_Tipo }}</strong>
         </ion-row>
       
       </ion-col>
 
-      <ion-col *ngIf="seleccion === 's' && pedido.Estado === 5 && pedido.Foto === null"  size="2.2" style="font-size: 0.8rem;border: 1px solid;border-color: rgb(126, 123, 123);">
+      <ion-col *ngIf="seleccion === 's' && pedido.estado === 5 && pedido.foto === null"  size="2.2" style="font-size: 0.8rem;border: 1px solid;border-color: rgb(126, 123, 123);">
         <ion-fab-button (click)="openAlertCamara(pedido)" size="small">
           <ion-icon name="camera-outline"></ion-icon>
         </ion-fab-button>
       </ion-col>
 
-      <ion-col *ngIf="seleccion === 's' && pedido.Estado === 5 && pedido.Foto !== null"  size="2.2" style="font-size: 0.8rem;border: 1px solid;border-color: rgb(126, 123, 123);">
+      <ion-col *ngIf="seleccion === 's' && pedido.estado === 5 && pedido.foto !== null"  size="2.2" style="font-size: 0.8rem;border: 1px solid;border-color: rgb(126, 123, 123);">
           <ion-label>Foto guardada</ion-label>          
           <ion-icon name="checkmark-outline"></ion-icon>
       </ion-col>
     </ion-row>
 
     <ion-row *ngFor="let pedido of pedidos$ ">
-      <ion-col *ngIf="seleccion === 'n' && pedido.Estado === 7" size="1.4" style="font-size: 0.5rem;border: 1px solid;border-color: rgb(126, 123, 123);">
-        <div font align="rigth">{{ pedido.Pedido }}</div>
+      <ion-col *ngIf="seleccion === 'n' && pedido.estado === 7" size="1.4" style="font-size: 0.5rem;border: 1px solid;border-color: rgb(126, 123, 123);">
+        <div font align="rigth">{{ pedido.pedido }}</div>
       </ion-col>
 
-      <ion-col *ngIf="seleccion === 'n' && pedido.Estado === 7" size="8.3" style="font-size: 0.8rem;border: 1px solid;border-color: rgb(126, 123, 123);">
+      <ion-col *ngIf="seleccion === 'n' && pedido.estado === 7" size="8.3" style="font-size: 0.8rem;border: 1px solid;border-color: rgb(126, 123, 123);">
         <ion-row class="item-2.0px" style="font-size: 0.7rem" class="item-10px">
-          <strong>{{ pedido.DestinoFinal }}</strong>
+          <strong>{{ pedido.destinoFinal }}</strong>
         </ion-row>
 
-        <ion-row *ngIf="seleccion === 'n' && pedido.Estado === 7" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
-          <strong>Direccion: {{ pedido.Direccion }}</strong>
+        <ion-row *ngIf="seleccion === 'n' && pedido.estado === 7" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
+          <strong>Direccion: {{ pedido.direccion }}</strong>
         </ion-row>
 
-        <ion-row *ngIf="seleccion === 'n' && pedido.Estado === 7" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
-          <strong>Tel: {{ pedido.Tel }}</strong>
+        <ion-row *ngIf="seleccion === 'n' && pedido.estado === 7" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
+          <strong>Tel: {{ pedido.tel }}</strong>
         </ion-row>
 
-        <ion-row *ngIf="seleccion === 'n' && pedido.Estado === 7" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
-          <strong>Depto: {{ pedido.Depto }}</strong>
+        <ion-row *ngIf="seleccion === 'n' && pedido.estado === 7" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
+          <strong>Depto: {{ pedido.depto }}</strong>
         </ion-row>
 
-        <ion-row *ngIf="seleccion === 'n' && pedido.Estado === 7" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
-          <strong>Ciudad: {{ pedido.Ciudad }}</strong>
+        <ion-row *ngIf="seleccion === 'n' && pedido.estado === 7" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
+          <strong>Ciudad: {{ pedido.ciudad }}</strong>
         </ion-row>
 
-        <ion-row *ngIf="seleccion === 'n' && pedido.Estado === 7" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
-          <strong>Fecha: {{ pedido.Vehi_Tipo }}</strong>
+        <ion-row *ngIf="seleccion === 'n' && pedido.estado === 7" class="item-2.0px" style="font-size: 0.5rem" class="item-10px">
+          <strong>Fecha: {{ pedido.vehi_Tipo }}</strong>
         </ion-row>
         
       </ion-col>
 
-      <ion-col *ngIf="seleccion === 'n' && pedido.Estado === 7" size="2.2" style="font-size: 0.8rem;border: 1px solid;border-color: rgb(126, 123, 123);">
+      <ion-col *ngIf="seleccion === 'n' && pedido.estado === 7" size="2.2" style="font-size: 0.8rem;border: 1px solid;border-color: rgb(126, 123, 123);">
         <ion-fab-button (click)="presentModal(pedido)" size="small">
           <ion-icon name="sync-outline">Eventos</ion-icon>
         </ion-fab-button>

@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ICausal } from 'src/interfaces/causal.interface';
 import { IInpunts } from 'src/interfaces/inputs';
+import { CausalesService } from '../services/causales.service';
 
 
 @Component({
@@ -44,7 +45,7 @@ export class HomePage {
 
   validacionRutas: number = 0;
 
-  constructor(private alDatos: AlistardatosPage, private menuCtrl: MenuController, public _logic: ProveedorDatosService, private alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, public toastController: ToastController, private router: Router, public modalController: ModalController, public appComponent: AppComponent, private serviceDatos: ProveedorDatosService) {
+  constructor(private alDatos: AlistardatosPage, private menuCtrl: MenuController, public _logic: ProveedorDatosService, private alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, public toastController: ToastController, private router: Router, public modalController: ModalController, public appComponent: AppComponent, private serviceDatos: ProveedorDatosService, private causalesService : CausalesService) {
     //let HoraInicio = new Date();
     //console.log(HoraInicio);
     console.log('entro nombre cons hom' + window.localStorage.getItem("usuario"))
@@ -59,9 +60,7 @@ export class HomePage {
     this.usuario = window.localStorage.getItem("usuario");
     window.localStorage.removeItem("pedido_ruta");
     window.localStorage.removeItem("pedido_actualizar");
-    console.log("usu"+ this.usuario);
     if(window.localStorage.getItem('session') === 'true'){
-      console.log('ionViewDidEnter');    
       this.cargar_datos_desde_LocalStorage();
       this.cargarContadores();
     }else{
@@ -74,8 +73,8 @@ export class HomePage {
       this.pedidos$ = JSON.parse(window.localStorage.getItem("pedidos"));
     }
 
-    this.serviceDatos.getCausal().subscribe((data)=> {
-      this.causal = data;      
+    this.causalesService.getCausal().subscribe((data)=> {
+      this.causal = JSON.parse(JSON.stringify(data.result));      
       this.causal.map((item)=>{
         let data = {       
           type: 'radio',
@@ -163,13 +162,13 @@ export class HomePage {
       this.restantes = 0;
       this.noEntregados = 0;
       for (let numero of this.pedidos$) {
-        if (numero.Estado === 5) {
+        if (numero.estado === 5) {
           this.entregados++;
         }
-        if (numero.Estado === 2) {
+        if (numero.estado === 2) {
           this.restantes++;
         }
-        if (numero.Estado === 7) {
+        if (numero.estado === 7) {
           this.noEntregados++;
         }
       }
@@ -206,7 +205,7 @@ export class HomePage {
   }
 
   pasarDatosParaActualizar(pedido) {
-    this.name_model = pedido.DestinoFinal;
+    this.name_model = pedido.destinoFinal;
   }
 
   //Metodo de confirmacion a la hora de entregar un pedido
@@ -298,10 +297,10 @@ export class HomePage {
     let date = new Date();
     let HoraInicio = this.horaLocalCO();
     this.pedidos$.map(item => {
-      if (item.Pedido === pedido.Pedido) {
-        item.Entrega_Fec = date;
-        item.Estado = 5;
-        item.Vehi_Tipo =  this.arreglaFecha(date);
+      if (item.pedido === pedido.pedido) {
+        item.entrega_Fec = date;
+        item.estado = 5;
+        item.vehi_Tipo =  this.arreglaFecha(date);
         item.LatNovedad = this._logic.latitud;
         item.LngNovedad = this._logic.longitud;
         item.Fec_Sincroniza = HoraInicio;
@@ -327,11 +326,11 @@ export class HomePage {
     let HoraInicio = this.horaLocalCO();
 
     this.pedidos$.map(item => {
-      if (item.Pedido === pedido.Pedido) {
-        item.Estado = 7;
-        item.Causal_Id = causal;
-        item.Entrega_Fec = date;
-        item.Vehi_Tipo =  this.arreglaFecha(date);
+      if (item.pedido === pedido.pedido) {
+        item.estado = 7;
+        item.causal_Id = causal;
+        item.entrega_Fec = date;
+        item.vehi_Tipo =  this.arreglaFecha(date);
         item.LatNovedad = this._logic.latitud;
         item.LngNovedad = this._logic.longitud;
         item.Fec_Sincroniza = HoraInicio;
@@ -344,11 +343,11 @@ export class HomePage {
   updateRow(pedido) {    
     for (let numero of this.pedidos$) {
       let i: number = 0
-      if (numero.DestinoFinal === this.name_model)
+      if (numero.destinoFinal === this.name_model)
         i = i + 1
       {
-        this.pedidos$[i].Estado = 2
-        numero.Estado = 2
+        this.pedidos$[i].estado = 2
+        numero.estado = 2
         break;
       }
     }
