@@ -20,10 +20,7 @@ export class ObtenerdatosPage {
   response: any = [];
 
   constructor( public _logic: ProveedorDatosService, private alertCtrl: AlertController, public toastController: ToastController, private router: Router) {
-
   }
-
-
 
   async toastConfirmacion(mensaje, colorT) {
     const toast = await this.toastController.create({

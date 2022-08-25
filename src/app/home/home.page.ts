@@ -26,29 +26,21 @@ import { CausalesService } from '../services/causales.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-
-  private database: SQLiteObject;
-  private dbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
   items: any = [];
   pedidos: IData[] = [];
   causal: ICausal[];
   inputs: IInpunts;
   listaInputs: IInpunts[] = [];
   name_model: string = "";
-  pedidosb = new BehaviorSubject([]);
   usuario: string = "";
   restantes: number = 0;
   entregados: number = 0;
   noEntregados: number = 0;
   latitud: number = 0;
   longitud: number = 0;
-
   validacionRutas: number = 0;
 
   constructor(private alDatos: AlistardatosPage, private menuCtrl: MenuController, public _logic: ProveedorDatosService, private alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, public toastController: ToastController, private router: Router, public modalController: ModalController, public appComponent: AppComponent, private serviceDatos: ProveedorDatosService, private causalesService : CausalesService) {
-    //let HoraInicio = new Date();
-    //console.log(HoraInicio);
-    console.log('entro nombre cons hom' + window.localStorage.getItem("usuario"))
     this.appComponent.usuario = window.localStorage.getItem("usuario");
     menuCtrl.enable(true, 'primerMenu');
   }
@@ -198,7 +190,6 @@ export class HomePage {
     });
     await alert.present();
   }
-
   
   cargar_datos_desde_LocalStorage() {
     this.pedidos = JSON.parse(window.localStorage.getItem('pedidos'));
@@ -291,7 +282,6 @@ export class HomePage {
   }
 
   actualizarPedido(pedido: any) {
-    console.log('entro actualzar');
     let date = new Date();
     let HoraInicio = this.horaLocalCO();
     this.pedidos.map(item => {
@@ -299,9 +289,9 @@ export class HomePage {
         item.entrega_Fec = HoraInicio+"";
         item.estado = 5;
         item.vehi_Tipo =  this.arreglaFecha(date);
-        //item.LatNovedad = this._logic.latitud;
-        //item.LngNovedad = this._logic.longitud;
-        //item.Fec_Sincroniza = HoraInicio;        
+        item.latNovedad = this._logic.latitud;
+        item.lngNovedad = this._logic.longitud;
+        item.fecSincroniza = HoraInicio;        
         this.alDatos.regrabar_JSON_enLocalStorage(this.pedidos);
       }
     });
@@ -329,26 +319,13 @@ export class HomePage {
         item.causal_Id = causal;
         item.entrega_Fec = date+"";
         item.vehi_Tipo =  this.arreglaFecha(date);
-        //item.LatNovedad = this._logic.latitud;
-        //item.LngNovedad = this._logic.longitud;
-        //item.Fec_Sincroniza = HoraInicio;
+        item.latNovedad = this._logic.latitud;
+        item.lngNovedad = this._logic.longitud;
+        item.fecSincroniza = HoraInicio;
       }
     });
     this.alDatos.regrabar_JSON_enLocalStorage(this.pedidos);
     this.cargarContadores();
-  }
-
-  updateRow(pedido) {    
-    for (let numero of this.pedidos) {
-      let i: number = 0
-      if (numero.destinoFinal === this.name_model)
-        i = i + 1
-      {
-        this.pedidos[i].estado = 2
-        numero.estado = 2
-        break;
-      }
-    }
   }
 
   toggleMenu() {

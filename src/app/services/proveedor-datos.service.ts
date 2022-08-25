@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 import { ResponseService } from 'src/interfaces/ResponseService';
 import { ICausal } from 'src/interfaces/causal.interface';
 import { UserEntity } from 'src/interfaces/userEntity';
+import { RequestDTO } from 'src/interfaces/requestDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -37,8 +38,10 @@ export class ProveedorDatosService {
     return this.http.get<IData[]>(this.dataUrl)
   }  
   
-  getData(): Observable<ResponseService> {
-    return this.http.get<ResponseService>(this._getData)
+  getData(cedula : number): Observable<ResponseService> {
+    let request = new RequestDTO();
+    request.id = cedula;
+    return this.http.post<ResponseService>(this._getData, request);
   }
 
   modificar(iData: IData[]) : Observable<ResponseService> {    
@@ -47,7 +50,6 @@ export class ProveedorDatosService {
 
   getLatitud(){
     this.geolocation.getCurrentPosition().then((geoposition: Geoposition)=>{
-      //console.log('servicio ' + geoposition.coords.Latitude);
       this.latitud = geoposition.coords.latitude;
     })
   }
@@ -58,16 +60,11 @@ export class ProveedorDatosService {
     });
   }
 
-  getLogin(clave: string, cedula: string): Observable<ResponseService>{       
-    console.log("clave: " + clave)
-    console.log("cedula: " + cedula);
+  getLogin(clave: string, cedula: string): Observable<ResponseService>{
     let userEntity = new UserEntity();
     userEntity.identification = cedula;
     userEntity.password = clave;
-    //console.log("conexion: " + this.conexion)
-    //return this.http.get<IData[]>(`${this.urlService}/Op_Conductores?user=`+cedula+`&password=`+clave+`&conexion=`+this.conexion);
-    return this.http.post<ResponseService>(this._login, userEntity); 
-    //this.http.get<IData[]>(`${this.urlService}/Op_Conductores?user=`+cedula+`&password=`+clave+`&conexion=`+this.conexion);;
+    return this.http.post<ResponseService>(this._login, userEntity);    
   }
 
   getConductores(): Observable<IData[]>{       

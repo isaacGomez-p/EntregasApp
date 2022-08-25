@@ -12,19 +12,22 @@ export interface IData {
     asignado?: number
     conductor?: string
     cond_celular?: number
-    Vehi_Placa?: string
+    vehi_Placa?: string
     vehi_Tipo?: string
-    Vehi_Color?: string
-    Relacion_Id?: number
-    Relacion_Fec?: string
-    PreRuta?: number
+    vehi_Color?: string
+    relacion_Id?: number
+    relacion_Fec?: string
+    preRuta?: number
     estado?: number
     causal_Id?: number
     entrega_Fec?: string
     foto?: string
     lat?: number
     lng?: number
-    Prec?: number
+    prec?: number
+    latNovedad? : number
+    lngNovedad? : number
+    fecSincroniza? : Date
     //Nombre_Conductor?: string  
 }
 
