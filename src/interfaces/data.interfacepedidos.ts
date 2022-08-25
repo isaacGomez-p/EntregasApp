@@ -3,7 +3,7 @@ export interface IData {
     despacho?: number
     manifiesto?: number
     pedido?: string
-    id?: string
+    id?: number
     destinoFinal?: string
     depto?: string
     ciudad?: string
@@ -22,10 +22,10 @@ export interface IData {
     causal_Id?: number
     entrega_Fec?: string
     foto?: string
-    Lat?: number
-    Lng?: number
+    lat?: number
+    lng?: number
     Prec?: number
-    Nombre_Conductor?: string  
+    //Nombre_Conductor?: string  
 }
 
 

@@ -41,7 +41,7 @@ export class ProveedorDatosService {
     return this.http.get<ResponseService>(this._getData)
   }
 
-  modificar(iData: IData) : Observable<ResponseService> {    
+  modificar(iData: IData[]) : Observable<ResponseService> {    
     return this.http.post<ResponseService>(this._modificar, iData);      
   }
 

@@ -6,6 +6,7 @@ import { Marker } from '../localiza/model/localiza.interface';
 import { Coordenadas } from '../localiza/model/coordenadas.interface';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { IData } from 'src/interfaces/data.interfacepedidos';
 
 declare var google;
 
@@ -17,7 +18,7 @@ declare var google;
 export class LocalizaPage implements OnInit {
 
   map: any;
-  pedido_ruta: any;
+  pedido_ruta: IData;
 
   pedidos: any = [];
 
@@ -49,13 +50,13 @@ export class LocalizaPage implements OnInit {
     toast.present();
   }
 
-
   ngOnInit() {      
     this.pedido_ruta = JSON.parse(window.localStorage.getItem("pedido_ruta"));       
     if(JSON.parse(window.localStorage.getItem("pedido_ruta")) !== null ) {
-      if(this.pedido_ruta.Lat !== null){      
+      if(this.pedido_ruta.lat !== null){      
         this.validacion = true;
-        this.destination = { lat: this.pedido_ruta.Lat, lng: this.pedido_ruta.Lng };
+
+        this.destination = { lat: this.pedido_ruta.lat, lng: this.pedido_ruta.lng };
         this.loadMap();
         window.localStorage.removeItem("pedido_ruta");
       }else{

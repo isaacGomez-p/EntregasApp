@@ -38,7 +38,7 @@
   
 
   <ion-grid size="auto" *ngIf="pedidos$ !== null">
-    <ion-row *ngFor="let pedido of pedidos$">
+    <ion-row *ngFor="let pedido of pedidos">
 
       <ion-col size="9.5" style="font-size: 0.8rem;border: 1px solid;border-color: rgb(126, 123, 123);"
         *ngIf=" pedido.estado === 2">

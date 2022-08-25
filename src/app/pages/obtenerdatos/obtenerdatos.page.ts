@@ -14,9 +14,9 @@ import { Router } from '@angular/router';
 
 export class ObtenerdatosPage {
 
-  pedidos: any = [];
+  pedidosLocal: IData[] = [];
   totalRegistros: number;
-  pedidosBD: any = [];
+  pedidosBD: IData[] = [];
   response: any = [];
 
   constructor( public _logic: ProveedorDatosService, private alertCtrl: AlertController, public toastController: ToastController, private router: Router) {
@@ -35,28 +35,19 @@ export class ObtenerdatosPage {
   }
 
   modificarBD(){
-    try{
-      this.pedidos = JSON.parse(window.localStorage.getItem( "pedidos"))      
-      this.pedidosBD = this._logic.getData();    
-      if(this.pedidos !== null){
-        this.pedidos.map(item => {
-          console.log('PedidobD: ' +  this.pedidosBD);
-          this.pedidosBD.subscribe(itemBD => {
-            itemBD.map(mapItem => {
-              console.log('Pedido: ' + mapItem.Pedido)
-              if(item.Pedido === mapItem.Pedido && item.estado !== mapItem.estado){
-                console.log('Entro ' + item.Pedido + ' estado ' + item.estado)   
-                //this.response = this._logic.modificar(item.Pedido, item);                
-                return;
-              }
-            });          
-          });
+    //Carga la lista de pedidos local
+      this.pedidosLocal = JSON.parse(window.localStorage.getItem( "pedidos"))      
+      if(this.pedidosLocal != null){
+        this._logic.modificar(this.pedidosLocal).subscribe((data) => {
+          if(data.status == 200){
+            this.toastConfirmacion('Sincronización exitosa.', 'success');  
+          }else{
+            this.toastConfirmacion('Lo sentimos, vuelva a intentarlo.', 'error');    
+          }          
         });
-      }
-      this.toastConfirmacion('Sincronización exitosa.', 'success');
-    }catch(Exception){
-      this.toastConfirmacion('Ha ocurrido un error en el servidor.', 'warning');
-    }
+      }else{
+        this.toastConfirmacion('No se encontraron datos para sincronizar.', 'warning');
+      }         
   }
 
   async openConfirmacion() {

@@ -30,7 +30,7 @@ export class HomePage {
   private database: SQLiteObject;
   private dbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
   items: any = [];
-  pedidos$: any = [];
+  pedidos: IData[] = [];
   causal: ICausal[];
   inputs: IInpunts;
   listaInputs: IInpunts[] = [];
@@ -70,7 +70,7 @@ export class HomePage {
     if(JSON.parse(window.localStorage.getItem("pedidos")) === null || JSON.parse(window.localStorage.getItem("pedidos")).length === 0){
       this.toastConfirmacion('No tienes datos asignados. Sincroniza para asegurar', 'warning');
     }else{
-      this.pedidos$ = JSON.parse(window.localStorage.getItem("pedidos"));
+      this.pedidos = JSON.parse(window.localStorage.getItem("pedidos"));
     }
 
     this.causalesService.getCausal().subscribe((data)=> {
@@ -78,7 +78,7 @@ export class HomePage {
       this.causal.map((item)=>{
         let data = {       
           type: 'radio',
-          label: item.nombre_causal,
+          label: item.nombreCausal,
           value: item.codigo
         }             
         this.listaInputs.push(data)
@@ -157,11 +157,11 @@ export class HomePage {
   }
 
   cargarContadores() {
-    if(this.pedidos$ !== null){
+    if(this.pedidos !== null){
       this.entregados = 0;
       this.restantes = 0;
       this.noEntregados = 0;
-      for (let numero of this.pedidos$) {
+      for (let numero of this.pedidos) {
         if (numero.estado === 5) {
           this.entregados++;
         }
@@ -201,7 +201,7 @@ export class HomePage {
 
   
   cargar_datos_desde_LocalStorage() {
-    this.pedidos$ = JSON.parse(window.localStorage.getItem('pedidos'));
+    this.pedidos = JSON.parse(window.localStorage.getItem('pedidos'));
   }
 
   pasarDatosParaActualizar(pedido) {
@@ -242,8 +242,6 @@ export class HomePage {
   }
 
   async pedidoCanceladoAlert(pedido: any) {    
-    let prueba = '';
-    let inputs = [];    
     
     let alert = await this.alertCtrl.create({
       header: 'Especifique la razón',
@@ -296,15 +294,15 @@ export class HomePage {
     console.log('entro actualzar');
     let date = new Date();
     let HoraInicio = this.horaLocalCO();
-    this.pedidos$.map(item => {
+    this.pedidos.map(item => {
       if (item.pedido === pedido.pedido) {
-        item.entrega_Fec = date;
+        item.entrega_Fec = HoraInicio+"";
         item.estado = 5;
         item.vehi_Tipo =  this.arreglaFecha(date);
-        item.LatNovedad = this._logic.latitud;
-        item.LngNovedad = this._logic.longitud;
-        item.Fec_Sincroniza = HoraInicio;
-        this.alDatos.regrabar_JSON_enLocalStorage(this.pedidos$);
+        //item.LatNovedad = this._logic.latitud;
+        //item.LngNovedad = this._logic.longitud;
+        //item.Fec_Sincroniza = HoraInicio;        
+        this.alDatos.regrabar_JSON_enLocalStorage(this.pedidos);
       }
     });
     
@@ -325,28 +323,28 @@ export class HomePage {
     let date = new Date();   
     let HoraInicio = this.horaLocalCO();
 
-    this.pedidos$.map(item => {
+    this.pedidos.map(item => {
       if (item.pedido === pedido.pedido) {
         item.estado = 7;
         item.causal_Id = causal;
-        item.entrega_Fec = date;
+        item.entrega_Fec = date+"";
         item.vehi_Tipo =  this.arreglaFecha(date);
-        item.LatNovedad = this._logic.latitud;
-        item.LngNovedad = this._logic.longitud;
-        item.Fec_Sincroniza = HoraInicio;
+        //item.LatNovedad = this._logic.latitud;
+        //item.LngNovedad = this._logic.longitud;
+        //item.Fec_Sincroniza = HoraInicio;
       }
     });
-    this.alDatos.regrabar_JSON_enLocalStorage(this.pedidos$);
+    this.alDatos.regrabar_JSON_enLocalStorage(this.pedidos);
     this.cargarContadores();
   }
 
   updateRow(pedido) {    
-    for (let numero of this.pedidos$) {
+    for (let numero of this.pedidos) {
       let i: number = 0
       if (numero.destinoFinal === this.name_model)
         i = i + 1
       {
-        this.pedidos$[i].estado = 2
+        this.pedidos[i].estado = 2
         numero.estado = 2
         break;
       }

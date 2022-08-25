@@ -15,7 +15,7 @@ import { ToastController } from '@ionic/angular';
 
 export class RevisarEstado {
 
-  pedidos$: any = [];
+  pedidos: IData[] = [];
   totalRegistros: number;
   seleccion;
 
@@ -38,11 +38,11 @@ export class RevisarEstado {
   }
 
   cargarContadores() {
-    if(this.pedidos$ !== null){
+    if(this.pedidos !== null){
       this.entregados = 0;
       this.restantes = 0;
       this.noEntregados = 0;
-      for (let numero of this.pedidos$) {
+      for (let numero of this.pedidos) {
         if (numero.estado === 5) {
           this.entregados++;
         }
@@ -62,7 +62,7 @@ export class RevisarEstado {
   }
 
   cargar_datos_desde_LocalStorage(){
-    this.pedidos$ = JSON.parse(window.localStorage.getItem('pedidos'));
+    this.pedidos = JSON.parse(window.localStorage.getItem('pedidos'));
   }
 
   async presentModal(pedido: any) {
@@ -144,15 +144,15 @@ export class RevisarEstado {
   actualizarPedido(pedido: any) {
     console.log('entro actualzar');
     let date = new Date();
-    this.pedidos$.map(item => {
-      if (item.Pedido === pedido.Pedido) {              
+    this.pedidos.map(item => {
+      if (item.pedido === pedido.Pedido) {              
         item.estado = 2;
-        item.Causal_Id = 0;
-        item.Entrega_Fec = '1900-01-01T00:00:00'; //null?
-        item.Vehi_Tipo =  '';
+        item.causal_Id = 0;
+        item.entrega_Fec = '1900-01-01T00:00:00'; //null?
+        item.vehi_Tipo =  '';
       }
     });
-    this.alDatos.regrabar_JSON_enLocalStorage(this.pedidos$);
+    this.alDatos.regrabar_JSON_enLocalStorage(this.pedidos);
   }
 
   async toastConfirmacion(mensaje, colorT) {
