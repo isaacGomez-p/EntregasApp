@@ -145,7 +145,7 @@ export class RevisarEstado {
     console.log('entro actualzar');
     let date = new Date();
     this.pedidos.map(item => {
-      if (item.pedido === pedido.Pedido) {              
+      if (item.pedido === pedido.pedido) {              
         item.estado = 2;
         item.causal_Id = 0;
         item.entrega_Fec = '1900-01-01T00:00:00'; //null?
